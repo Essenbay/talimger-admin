@@ -22,7 +22,6 @@ class AppSettingsModel {
       aboutDescription;
   final HomeCategory? homeCategory1, homeCategory2, homeCategory3;
   final AppSettingsSocialInfo? social;
-  final LicenseType? license;
 
   AppSettingsModel({
     this.whatsapp,
@@ -45,7 +44,6 @@ class AppSettingsModel {
     this.social,
     this.skipLogin,
     this.latestCourses,
-    this.license,
     this.contentSecurity,
   });
 
@@ -75,21 +73,10 @@ class AppSettingsModel {
       social: d['social'] != null
           ? AppSettingsSocialInfo.fromMap(d['social'])
           : null,
-      license: _getLicenseType(d['license']),
       contentSecurity: d['content_security'] ?? false,
       aboutDescription: d['about_description'],
       aboutImage: d['about_image'],
     );
-  }
-
-  static LicenseType _getLicenseType(String? value) {
-    if (value == 'regular') {
-      return LicenseType.regular;
-    } else if (value == 'extended') {
-      return LicenseType.extended;
-    } else {
-      return LicenseType.none;
-    }
   }
 
   static Map<String, dynamic> getMap(AppSettingsModel d) {
@@ -123,23 +110,6 @@ class AppSettingsModel {
       'about_description': d.aboutDescription,
       'about_image': d.aboutImage,
     };
-  }
-
-  static Map<String, dynamic> getMapLicense(AppSettingsModel d) {
-    final String? licenseString = _getLicenseString(d);
-    return {
-      'license': licenseString,
-    };
-  }
-
-  static String? _getLicenseString(AppSettingsModel d) {
-    if (d.license == LicenseType.regular) {
-      return 'regular';
-    } else if (d.license == LicenseType.extended) {
-      return 'extended';
-    } else {
-      return null;
-    }
   }
 }
 
